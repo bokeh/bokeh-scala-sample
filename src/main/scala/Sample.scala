@@ -21,7 +21,7 @@ object Sample extends App with Tools {
     plot.below <<= (xaxis :: _)
     plot.left <<= (yaxis :: _)
 
-    val circle = new Glyph().data_source(source).xdata_range(xdr).ydata_range(ydr)
+    val circle = new Glyph().data_source(source)
         .glyph(new Circle().x('x).y('y).size(5).fill_color(Color.Red).line_color(Color.Black))
 
     plot.renderers := List(xaxis, yaxis, circle)
