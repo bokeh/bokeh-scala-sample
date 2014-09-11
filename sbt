@@ -1,5 +1,7 @@
 #!/bin/bash
 
+JVM_OPTS="-Xss8M -Xmx1G -XX:MaxPermSize=1024M"
+
 SBT_VERSION=$(cat project/build.properties | grep sbt.version | cut -d'=' -f2)
 SBT_LAUNCHER="$(dirname $0)/project/sbt-launch-$SBT_VERSION.jar"
 
@@ -9,4 +11,4 @@ then
     wget -O $SBT_LAUNCHER $URL
 fi
 
-java -jar $SBT_LAUNCHER $*
+java $JVM_OPTS -jar $SBT_LAUNCHER $*
