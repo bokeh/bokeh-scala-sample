@@ -4,15 +4,15 @@ import io.continuum.bokeh._
 import math.{Pi=>pi,sin}
 
 object Sample extends App with Tools {
-    val x = -2*pi to 2*pi by 0.1
-    val y = x.map(sin)
+    object source extends ColumnDataSource {
+        val x = column(-2*pi to 2*pi by 0.1)
+        val y = column(x.value.map(sin))
+    }
 
-    val source = new ColumnDataSource()
-        .addColumn('x, x)
-        .addColumn('y, y)
+    import source.{x,y}
 
-    val xdr = new DataRange1d().sources(source.columns('x) :: Nil)
-    val ydr = new DataRange1d().sources(source.columns('y) :: Nil)
+    val xdr = new DataRange1d().sources(x :: Nil)
+    val ydr = new DataRange1d().sources(y :: Nil)
 
     val plot = new Plot().x_range(xdr).y_range(ydr).tools(Pan|WheelZoom)
 
@@ -21,8 +21,8 @@ object Sample extends App with Tools {
     plot.below <<= (xaxis :: _)
     plot.left <<= (yaxis :: _)
 
-    val circle = new Glyph().data_source(source)
-        .glyph(new Circle().x('x).y('y).size(5).fill_color(Color.Red).line_color(Color.Black))
+    val glyph = new Circle().x(x).y(y).size(5).fill_color(Color.Red).line_color(Color.Black)
+    val circle = new GlyphRenderer().data_source(source).glyph(glyph)
 
     plot.renderers := List(xaxis, yaxis, circle)
 
