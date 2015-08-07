@@ -2,8 +2,8 @@ organization := "io.continuum.bokeh"
 
 name := "sample"
 
-version := "0.5"
+version := "0.6"
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.7"
 
-libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.5"
+libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.6"
